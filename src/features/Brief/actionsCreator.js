@@ -1,21 +1,20 @@
-import { SET_BRIEF, GET_BRIEF } from "../../share/constants/ActionTypes";
+import {
+  SET_BRIEF,
+  LOAD_BRIEFS,
+  LOAD_PRODUCTS,
+} from "../../share/constants/ActionTypes";
 
 export function mapStateToProps(state) {
-  return { ...state.briefReducer };
+  return {
+    briefs: state.briefReducer.briefs,
+    products: state.briefReducer.products,
+  };
 }
 
 export function mapDispatchToProps(dispatch) {
   return {
-    setNewProduct: (payload) => {
-      console.log("payload",payload);
-      dispatch({ type: SET_BRIEF, payload });
-    },
+    setBrief: (payload) => dispatch({ type: SET_BRIEF, payload }),
+    loadBriefs: (payload) => dispatch({ type: LOAD_BRIEFS, payload }),
+    loadProducts: (payload) => dispatch({ type: LOAD_PRODUCTS, payload }),
   };
 }
-
-// userAuthState: (payload) =>
-//       dispatch({ type: SET_USER_AUTHENTICATION, payload }),
-//     userExpires: (payload) =>
-//       dispatch({ type: SET_USER_AUTH_EXPIRATION, payload }),
-//     userUpdate: () => dispatch({ type: POP_USER_AUTHENTICATION }),
-//     userLogout: () => dispatch({ type: DEL_USER_AUTHENTICATION }),

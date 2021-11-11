@@ -1,4 +1,3 @@
-
 import BriefForm from "./features/Brief/BriefForm";
 import BriefList, { ItemList } from "./features/Brief/BriefList";
 import Container from "@mui/material/Container";
@@ -8,21 +7,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
-function App(props) {
-  console.log(props);
+
+function App() {
   return (
     <Container maxWidth="md" className="main">
       <Box sx={{ my: 4 }}>
@@ -38,7 +25,6 @@ function App(props) {
             </Grid>
           </Grid>
         </Box>
-        <Copyright />
       </Box>
     </Container>
   );

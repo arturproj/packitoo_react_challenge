@@ -1,6 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { mapStateToProps, mapDispatchToProps } from "../actionsCreator";
+import { mapStateToProps, mapDispatchToProps } from "./actionsCreator";
+import { getProducts, postBrief, getBriefs } from "../../share/api/brief";
+import SelectForm from "./components/SelectForm";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -11,8 +13,9 @@ class BriefForm extends React.Component {
     super(state);
     this.state = {
       title: "",
-      productId: "",
-      comments: "",
+      productId: NaN,
+      products: [],
+      comment: "",
     };
 
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
@@ -22,8 +25,10 @@ class BriefForm extends React.Component {
    *
    */
   handleTextFieldChange({ target }) {
-    if (target.value !== this.state[target.id]) {
-      this.setState({ [target.id]: target.value });
+    const { id, value } = target;
+    console.log(id, value);
+    if (value !== this.state[id]) {
+      this.setState({ [id]: value });
     }
   }
   /**
@@ -31,23 +36,27 @@ class BriefForm extends React.Component {
    */
   handleSubmit(e) {
     e.preventDefault();
-    console.log("Submit", this.state);
-    this.props.setNewProduct(this.state);
-    this.setState({ title: "", productId: "", comments: "" });
+    const { title, productId, comment } = this.state;
+
+    postBrief({ title, productId, comment })
+      .then((res) => {
+        this.props.loadBriefs([...this.props.briefs, res]);
+      })
+      .finally(() => this.setState({ title: "", productId: NaN, comment: "" }));
   }
   /**
    *
    */
   componentDidMount() {
-    console.log("Mount", this.props);
+    getProducts().then((res) => this.props.loadProducts(res));
+    console.log("Load products", this.props.products);
   }
-  componentDidUpdate() {
-    console.log("Update", this.props);
-  }
+
   /**
    *
    */
   render() {
+    console.log(this.props);
     return (
       <React.Fragment>
         BriefForm
@@ -64,14 +73,12 @@ class BriefForm extends React.Component {
             />
           </Grid>
           <Grid item xs={12} sm={6} md={12}>
-            <TextField
-              required
-              fullWidth
-              sx={{ m: "auto" }}
+            <SelectForm
+              label="Product ID"
               id="productId"
-              label="ProductId"
-              value={this.state.productId}
-              onChange={this.handleTextFieldChange}
+              products={this.props.products}
+              productId={this.props.productId}
+              handleTextFieldChange={this.handleTextFieldChange}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -82,9 +89,9 @@ class BriefForm extends React.Component {
               maxRows={5}
               fullWidth
               sx={{ m: "auto" }}
-              id="comments"
-              label="Comments"
-              value={this.state.comments}
+              id="comment"
+              label="Comment"
+              value={this.state.comment}
               onChange={this.handleTextFieldChange}
             />
           </Grid>
@@ -102,4 +109,5 @@ class BriefForm extends React.Component {
     );
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(BriefForm);
