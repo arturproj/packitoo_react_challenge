@@ -3,6 +3,10 @@ import * as types from "../../share/constants/ActionTypes";
 const initialState = {
   briefs: [],
   products: [],
+  filterTool: {
+    active: false,
+    product: null,
+  },
 };
 function reducer(state = initialState, action) {
   console.log(action);
@@ -30,6 +34,14 @@ function reducer(state = initialState, action) {
         ...state,
         briefs: action.payload.briefs,
         products: action.payload.products,
+      };
+    case types.FILTER:
+      return {
+        ...state,
+        filterTool: {
+          active: action.payload.active || false,
+          product: action.payload.product || null,
+        },
       };
     default:
       return { ...state };

@@ -7,7 +7,6 @@ import {
   Button,
 } from "@mui/material";
 export default function MultiActionAreaCard(props) {
-  console.log(props);
   return (
     <Card style={{ textAlign: "left", padding: "1em" }} >
       <Typography variant="h5" component="p">

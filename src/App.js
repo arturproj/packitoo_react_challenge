@@ -1,13 +1,12 @@
 import BriefForm from "./features/Brief/BriefForm";
 import BriefList, { ItemList } from "./features/Brief/BriefList";
+import FilterList from "./features/Brief/FilterBar";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-
-
 
 function App() {
   return (
@@ -18,6 +17,9 @@ function App() {
             <Grid item xs={12} md={4}>
               <ItemList>
                 <BriefForm />
+              </ItemList>
+              <ItemList>
+                <FilterList />
               </ItemList>
             </Grid>
             <Grid item xs={12} md={8}>
