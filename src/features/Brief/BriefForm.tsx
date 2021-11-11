@@ -1,19 +1,17 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { mapStateToProps, mapDispatchToProps } from "./actionsCreator";
-import { getProducts, postBrief, getBriefs } from "../../share/api/brief";
+import { getProducts, postBrief } from "../../share/api/brief";
 import SelectForm from "./components/SelectForm";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { Grid, TextField, Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-class BriefForm extends React.Component {
-  constructor(state) {
+class BriefForm extends React.Component<any, any> {
+  constructor(state: any) {
     super(state);
     this.state = {
       title: "",
-      productId: NaN,
+      productId: 0,
       products: [],
       comment: "",
     };
@@ -24,9 +22,8 @@ class BriefForm extends React.Component {
   /**
    *
    */
-  handleTextFieldChange({ target }) {
-    const { id, value } = target;
-    console.log(id, value);
+  handleTextFieldChange(e: any): void {
+    const { id, value } = e.target;
     if (value !== this.state[id]) {
       this.setState({ [id]: value });
     }
@@ -34,7 +31,7 @@ class BriefForm extends React.Component {
   /**
    *
    */
-  handleSubmit(e) {
+  handleSubmit(e: any): void {
     e.preventDefault();
     const { title, productId, comment } = this.state;
 
@@ -42,24 +39,21 @@ class BriefForm extends React.Component {
       .then((res) => {
         this.props.loadBriefs([...this.props.briefs, res]);
       })
-      .finally(() => this.setState({ title: "", productId: NaN, comment: "" }));
+      .finally(() => this.setState({ title: "", productId: 0, comment: "" }));
   }
   /**
    *
    */
   componentDidMount() {
     getProducts().then((res) => this.props.loadProducts(res));
-    console.log("Load products", this.props.products);
   }
 
   /**
    *
    */
   render() {
-    console.log(this.props);
     return (
       <React.Fragment>
-        BriefForm
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={12}>
             <TextField
@@ -77,7 +71,7 @@ class BriefForm extends React.Component {
               label="Product ID"
               id="productId"
               products={this.props.products}
-              productId={this.props.productId}
+              productId={this.state.productId}
               handleTextFieldChange={this.handleTextFieldChange}
             />
           </Grid>
@@ -101,7 +95,7 @@ class BriefForm extends React.Component {
               endIcon={<SendIcon />}
               onClick={this.handleSubmit}
             >
-              Send
+              save brief
             </Button>
           </Grid>
         </Grid>

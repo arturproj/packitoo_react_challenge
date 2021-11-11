@@ -1,58 +1,68 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import { useTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import { connect } from "react-redux";
-import {
-  mapStateToProps,
-  mapDispatchToProps,
-} from "./actionsCreator";
+import { mapStateToProps, mapDispatchToProps } from "./actionsCreator";
 
-function a11yProps(index) {
+function concatProps(index: number) {
   return {
     id: `vertical-tab-${index}`,
     "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
 
-export function TabPanel(props) {
-  const [selectedTab, setTab] = React.useState(
-    props.filter.product !== null ? props.filter.product.id : 0
-  );
-  const handleChange = (e, value) => {
+export function TabPanel(props: any) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [selectedTab, setTab] = React.useState(0);
+
+  /**
+   *
+   * @returns array jsx components
+   */
+  const handleChange = (e: any, value: number) => {
     if (value > 0) {
       props.loadFilter({
         active: true,
-        product: props.products.find((ele) => ele.id === value) || null,
+        product:
+          props.products.find((ele: Product) => ele.id === value) || null,
       });
     } else {
       props.loadFilter();
     }
     setTab(value);
   };
+  /**
+   *
+   * @returns array jsx components
+   */
 
   return (
     <>
       <Typography variant="h6" component="p">
-        FILTER BAR
+        FILTER BAR {isMobile.toString()}
       </Typography>
+
       <Tabs
-        orientation="vertical"
+        scrollButtons="auto"
+        allowScrollButtonsMobile={isMobile}
+        orientation={isMobile ? "horizontal" : "vertical"}
         variant="scrollable"
         value={selectedTab}
         onChange={handleChange}
         aria-label="vertical filters tab"
-        sx={{ borderRight: 1, borderColor: "divider" }}
       >
-        <Tab key={0} label={"ALL BRIEFS"} {...a11yProps(0)} />
+        <Tab key={0} label={"ALL BRIEFS"} {...concatProps(0)} />
         {props.products.length ? (
-          props.products.map((tab, idx) => (
+          props.products.map((tab: Product, idx: number) => (
             <Tab
               key={tab.id}
               label={tab.name.toUpperCase()}
-              {...a11yProps(tab.id)}
+              {...concatProps(tab.id)}
             />
           ))
         ) : (

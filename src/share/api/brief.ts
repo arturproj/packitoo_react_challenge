@@ -19,13 +19,13 @@ export const getProducts = async () => {
   return result.data;
 };
 
-export const postBrief = async (param) => {
+export const postBrief = async (param: object) => {
   setupHeaders();
   const result = await axios.post(`${REACT_APP_API_URL}/briefs`, param);
   return result.data;
 };
 
-export const postProduct = async (param) => {
+export const postProduct = async (param: object) => {
   setupHeaders();
   const result = await axios.post(`${REACT_APP_API_URL}/products`, param);
   return result.data;

@@ -1,6 +1,6 @@
 import * as types from "../../share/constants/ActionTypes";
 
-const initialState = {
+const State: ReducerState = {
   briefs: [],
   products: [],
   filterTool: {
@@ -8,12 +8,12 @@ const initialState = {
     product: null,
   },
 };
-function reducer(state = initialState, action) {
-  console.log(action);
+function reducer(state = State, action: Action): ReducerState {
   switch (action.type) {
     case types.SET_BRIEF:
       let { briefs } = state;
-      briefs.push(action.payload);
+      let brief = action.payload;
+      briefs.push(brief);
       return { ...state, briefs };
     case types.SET_PRODUCT:
       let { products } = state;

@@ -1,14 +1,7 @@
-import React from "react";
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-} from "@mui/material";
-export default function MultiActionAreaCard(props) {
+import { Card, Typography, Button } from "@mui/material";
+export default function BriefCard(props: any) {
   return (
-    <Card style={{ textAlign: "left", padding: "1em" }} >
+    <Card style={{ textAlign: "left", padding: "1em" }}>
       <Typography variant="h5" component="p">
         {props.title}
       </Typography>

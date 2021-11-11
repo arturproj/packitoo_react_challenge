@@ -1,10 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {
-  mapStateToProps,
-  mapDispatchToProps,
-  reselect,
-} from "./actionsCreator";
+import { mapStateToProps, mapDispatchToProps } from "./actionsCreator";
 import { getBriefs } from "../../share/api/brief";
 import BriefCard from "./components/BriefCard";
 import { styled } from "@mui/material/styles";
@@ -17,36 +13,19 @@ export const ItemList = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const exampleState = {
-  filterID: 1,
-  briefs: [
-    { name: "apple", value: 1.2 },
-    { name: "orange", value: 0.95 },
-  ],
-};
-
-class BriefList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+class BriefList extends React.Component<any, any> {
   componentDidMount() {
     getBriefs().then((res) => this.props.loadBriefs(res));
   }
-  componentDidUpdate() {
-    console.log("Update briefs", this.props.briefs);
-  }
 
   render() {
-    const { briefs, products, filter } = this.props;
+    const { briefs, products, filterTool } = this.props;
+
     let filtredBriefs = [];
 
-    if (filter.active && filter.product !== null) {
-      console.log(
-        filter,
-        briefs.filter((brief) => brief.productId === filter.product.id)
-      );
+    if (filterTool.active && filterTool.product !== null) {
       filtredBriefs = briefs.filter(
-        (brief) => brief.productId === filter.product.id
+        (brief: Brief) => brief.productId === filterTool.product.id
       );
     } else {
       filtredBriefs = [...briefs];
@@ -54,14 +33,15 @@ class BriefList extends React.Component {
 
     return (
       <React.Fragment>
-        BriefList
         {filtredBriefs.length ? (
-          filtredBriefs.map((brief, idx) => (
+          filtredBriefs.map((brief: Brief, idx: number) => (
             <ItemList key={idx}>
               <BriefCard
                 title={brief.title}
                 comment={brief.comment}
-                product={products.find((x) => x.id === brief.productId)}
+                product={products.find(
+                  (x: Product) => x.id === brief.productId
+                )}
               />
             </ItemList>
           ))
@@ -72,4 +52,7 @@ class BriefList extends React.Component {
     );
   }
 }
+
+// BriefList.propTypes = {};
+
 export default connect(mapStateToProps, mapDispatchToProps)(BriefList);
