@@ -1,12 +1,10 @@
 import * as types from "../../share/constants/ActionTypes";
 
-type StateType = {
-  status: Boolean;
-};
-const State: StateType = { status: true };
+
+export const State: LondingState = { status: true };
 type Action = { type: "ON_LOADING" } | { type: "OFF_LOADING" };
 
-function reducer(state = State, action: Action): StateType {
+function reducer(state = State, action: Action): LondingState {
   switch (action.type) {
     case types.ON_LOADING:
       return { ...state, status: true };

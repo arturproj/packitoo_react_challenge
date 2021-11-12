@@ -12,15 +12,12 @@ export function briefStateToProps(state: any) {
 
 export function briefDispatchToProps(dispatch: any) {
   return {
-    setBrief: (payload: { type: "SET_BRIEF"; payload: Brief }) =>
-      dispatch({ type: SET_BRIEF, payload }),
-    loadBriefs: (payload: { type: "LOAD_BRIEFS"; payload: Array<Brief> }) =>
+    setBrief: (payload: BriefType) => dispatch({ type: SET_BRIEF, payload }),
+    loadBriefs: (payload: Array<BriefType>) =>
       dispatch({ type: LOAD_BRIEFS, payload }),
-    loadProducts: (payload: {
-      type: "LOAD_PRODUCTS";
-      payload: Array<Product>;
-    }) => dispatch({ type: LOAD_PRODUCTS, payload }),
-    loadFilter: (payload = {}) => dispatch({ type: FILTER, payload }),
+    loadProducts: (payload: Array<ProductType>) =>
+      dispatch({ type: LOAD_PRODUCTS, payload }),
+    loadFilter: (payload: object = {}) => dispatch({ type: FILTER, payload }),
   };
 }
 
@@ -42,6 +39,6 @@ export const filtredBriefs = createSelector(
   selectBriefs,
   (filterTool, briefs) =>
     filterTool.active() && filterTool.id()
-      ? briefs.filter((brief: Brief) => brief.productId === filterTool.id())
+      ? briefs.filter((brief: BriefType) => brief.productId === filterTool.id())
       : [...briefs]
 );

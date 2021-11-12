@@ -1,20 +1,6 @@
 import * as types from "../../share/constants/ActionTypes";
 
-type Action =
-  | { type: "SET_BRIEF"; payload: Brief }
-  | { type: "SET_PRODUCT"; payload: Product }
-  | { type: "LOAD_BRIEFS"; payload: Array<Brief> }
-  | { type: "LOAD_PRODUCTS"; payload: Array<Product> }
-  | {
-      type: "DUMP_ANY";
-      payload: {
-        briefs: Array<Brief>;
-        products: Array<Product>;
-      };
-    }
-  | { type: "FILTER"; payload: { active?: Boolean; product?: Product } };
-
-const State: ReducerState = {
+export const State: BriefState = {
   briefs: [],
   products: [],
   filterTool: {
@@ -22,7 +8,22 @@ const State: ReducerState = {
     product: null,
   },
 };
-function reducer(state = State, action: Action): ReducerState {
+
+type Action =
+  | { type: "SET_BRIEF"; payload: BriefType}
+  | { type: "SET_PRODUCT"; payload: ProductType }
+  | { type: "LOAD_BRIEFS"; payload: Array<BriefType> }
+  | { type: "LOAD_PRODUCTS"; payload: Array<ProductType> }
+  | {
+      type: "DUMP_ANY";
+      payload: {
+        briefs: Array<BriefType>;
+        products: Array<ProductType>;
+      };
+    }
+  | { type: "FILTER"; payload: { active?: Boolean; product?: ProductType } };
+
+function reducer(state = State, action: Action): BriefState {
   switch (action.type) {
     case types.SET_BRIEF:
       let { briefs } = state;

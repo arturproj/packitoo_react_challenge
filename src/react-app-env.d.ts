@@ -1,18 +1,22 @@
 /// <reference types="react-scripts" />
 
-type Brief = {
+type BriefType = {
   id: number;
   title: string;
   comment: string;
   productId: number;
 };
 
-type Product = {
+type ProductType = {
   id: number;
   name: string;
 };
 
-type ReducerState = {
+type LondingState = {
+  status: Boolean;
+};
+
+type BriefState = {
   briefs: Array<Brief>;
   products: Array<Product>;
   filterTool: {
@@ -20,4 +24,3 @@ type ReducerState = {
     product: Product | null;
   };
 };
-
