@@ -1,6 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { mapStateToProps, mapDispatchToProps } from "./actionsCreator";
+import {
+  mapStateToProps,
+  mapDispatchToProps,
+  selectProducts,
+  filtredBriefs,
+} from "./actionsCreator";
 import { getBriefs } from "../../share/api/brief";
 import BriefCard from "./components/BriefCard";
 import { styled } from "@mui/material/styles";
@@ -19,27 +24,15 @@ class BriefList extends React.Component<any, any> {
   }
 
   render() {
-    const { briefs, products, filterTool } = this.props;
-
-    let filtredBriefs = [];
-
-    if (filterTool.active && filterTool.product !== null) {
-      filtredBriefs = briefs.filter(
-        (brief: Brief) => brief.productId === filterTool.product.id
-      );
-    } else {
-      filtredBriefs = [...briefs];
-    }
-
     return (
       <React.Fragment>
-        {filtredBriefs.length ? (
-          filtredBriefs.map((brief: Brief, idx: number) => (
+        {filtredBriefs(this.props).length ? (
+          filtredBriefs(this.props).map((brief: Brief, idx: number) => (
             <ItemList key={idx}>
               <BriefCard
                 title={brief.title}
                 comment={brief.comment}
-                product={products.find(
+                product={selectProducts(this.props).find(
                   (x: Product) => x.id === brief.productId
                 )}
               />

@@ -4,6 +4,7 @@ import {
   LOAD_PRODUCTS,
   FILTER,
 } from "../../share/constants/ActionTypes";
+import { createSelector } from "reselect";
 
 export function mapStateToProps(state: any) {
   return {
@@ -26,3 +27,25 @@ export function mapDispatchToProps(dispatch: any) {
     loadFilter: (payload = {}) => dispatch({ type: FILTER, payload }),
   };
 }
+
+export const selectBriefs = (state: any) => state.briefs;
+
+export const selectProducts = (state: any) => state.products;
+
+export const selectFilterTool = (state: any) => {
+  return {
+    active: () => state.filterTool.active,
+    id: () => (state.filterTool.product ? state.filterTool.product.id : null),
+    product: () =>
+      state.filterTool.product ? state.filterTool.product.name : null,
+  };
+};
+
+export const filtredBriefs = createSelector(
+  selectFilterTool,
+  selectBriefs,
+  (filterTool, briefs) =>
+    filterTool.active() && filterTool.id()
+      ? briefs.filter((brief: Brief) => brief.productId === filterTool.id())
+      : [...briefs]
+);

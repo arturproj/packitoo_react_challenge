@@ -6,7 +6,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import { connect } from "react-redux";
-import { mapStateToProps, mapDispatchToProps } from "./actionsCreator";
+import {
+  mapStateToProps,
+  mapDispatchToProps,
+  selectProducts,
+} from "./actionsCreator";
 
 function concatProps(index: number) {
   return {
@@ -29,7 +33,8 @@ export function TabPanel(props: any) {
       props.loadFilter({
         active: true,
         product:
-          props.products.find((ele: Product) => ele.id === value) || null,
+          selectProducts(props).find((ele: Product) => ele.id === value) ||
+          null,
       });
     } else {
       props.loadFilter();
@@ -75,13 +80,9 @@ export function TabPanel(props: any) {
 
 TabPanel.propTypes = {
   products: PropTypes.array.isRequired,
-  // handleChange: PropTypes.func.isRequired,
 };
 
 TabPanel.defaultProps = {
   products: [],
-  // handleChange: (e, value) => {
-  //   console.log(value);
-  // },
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TabPanel);

@@ -17,7 +17,7 @@ type ReducerState = {
   products: Array<Product>;
   filterTool: {
     active: Boolean;
-    product: object | null;
+    product: Product | null;
   };
 };
 
