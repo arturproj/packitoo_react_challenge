@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { mapStateToProps, mapDispatchToProps } from "./actionsCreator";
+import { loadingDispatchToProps } from "../Londing/actionsCreator";
 import { getProducts, postBrief } from "../../share/api/brief";
 import SelectForm from "./components/SelectForm";
 import { Grid, TextField, Button } from "@mui/material";
@@ -32,12 +33,14 @@ class BriefForm extends React.Component<any, any> {
    *
    */
   handleSubmit(e: any): void {
+    this.props.runLoading();
     e.preventDefault();
     const { title, productId, comment } = this.state;
 
     postBrief({ title, productId, comment })
       .then((res) => {
         this.props.loadBriefs([...this.props.briefs, res]);
+        this.props.stopLoading();
       })
       .finally(() => this.setState({ title: "", productId: 0, comment: "" }));
   }
@@ -45,7 +48,12 @@ class BriefForm extends React.Component<any, any> {
    *
    */
   componentDidMount() {
-    getProducts().then((res) => this.props.loadProducts(res));
+    this.props.runLoading();
+    getProducts().then((res) => {
+      this.props.loadProducts(res);
+      this.props.stopLoading();
+    });
+    console.log(this.props);
   }
 
   /**
@@ -104,4 +112,9 @@ class BriefForm extends React.Component<any, any> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BriefForm);
+export const connectedBriefForm = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BriefForm);
+
+export default connect(null, loadingDispatchToProps)(connectedBriefForm);

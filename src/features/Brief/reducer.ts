@@ -1,5 +1,19 @@
 import * as types from "../../share/constants/ActionTypes";
 
+type Action =
+  | { type: "SET_BRIEF"; payload: Brief }
+  | { type: "SET_PRODUCT"; payload: Product }
+  | { type: "LOAD_BRIEFS"; payload: Array<Brief> }
+  | { type: "LOAD_PRODUCTS"; payload: Array<Product> }
+  | {
+      type: "DUMP_ANY";
+      payload: {
+        briefs: Array<Brief>;
+        products: Array<Product>;
+      };
+    }
+  | { type: "FILTER"; payload: { active?: Boolean; product?: Product } };
+
 const State: ReducerState = {
   briefs: [],
   products: [],

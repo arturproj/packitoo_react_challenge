@@ -7,11 +7,7 @@ import {
 import { createSelector } from "reselect";
 
 export function mapStateToProps(state: any) {
-  return {
-    briefs: state.briefReducer.briefs,
-    products: state.briefReducer.products,
-    filterTool: state.briefReducer.filterTool,
-  };
+  return { ...state.briefReducer };
 }
 
 export function mapDispatchToProps(dispatch: any) {

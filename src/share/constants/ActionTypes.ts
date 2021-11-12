@@ -4,3 +4,5 @@ export const LOAD_BRIEFS = "LOAD_BRIEFS";
 export const LOAD_PRODUCTS = "LOAD_PRODUCTS";
 export const DUMP_ANY = "DUMP_ANY";
 export const FILTER = "FILTER";
+export const ON_LOADING = "ON_LOADING";
+export const OFF_LOADING = "OFF_LOADING";
