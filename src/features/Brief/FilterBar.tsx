@@ -7,8 +7,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import { connect } from "react-redux";
 import {
-  mapStateToProps,
-  mapDispatchToProps,
+  briefStateToProps,
+  briefDispatchToProps,
   selectProducts,
 } from "./actionsCreator";
 import { loadingDispatchToProps } from "../Londing/actionsCreator";
@@ -21,7 +21,6 @@ function concatProps(index: number) {
 }
 
 export function TabPanel(props: any) {
-  console.log("TabPanel", props);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [selectedTab, setTab] = React.useState(0);
@@ -90,8 +89,8 @@ TabPanel.defaultProps = {
   products: [],
 };
 export const connectedTabPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  briefStateToProps,
+  briefDispatchToProps
 )(TabPanel);
 
 export default connect(null, loadingDispatchToProps)(connectedTabPanel);

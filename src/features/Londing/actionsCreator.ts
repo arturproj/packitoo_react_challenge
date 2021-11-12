@@ -7,7 +7,7 @@ export function loadingStateToProps(state: any) {
 export function loadingDispatchToProps(dispatch: any) {
   return {
     runLoading: () => dispatch({ type: ON_LOADING }),
-    stopLoading: () => setTimeout(() => dispatch({ type: OFF_LOADING }), 2000),
+    stopLoading: () => setTimeout(() => dispatch({ type: OFF_LOADING }), 600),
   };
 }
 

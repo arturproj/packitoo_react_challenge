@@ -1,11 +1,17 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import {
-  mapStateToProps,
-  mapDispatchToProps,
+  briefStateToProps,
+  briefDispatchToProps,
   selectProducts,
   filtredBriefs,
 } from "./actionsCreator";
+import {
+  loadingStateToProps,
+  loadingDispatchToProps,
+  selectStatus,
+} from "../Londing/actionsCreator";
+import Londing from "../Londing/Londing";
 import { getBriefs } from "../../share/api/brief";
 import BriefCard from "./components/BriefCard";
 import { styled } from "@mui/material/styles";
@@ -26,7 +32,9 @@ class BriefList extends React.Component<any, any> {
   render() {
     return (
       <React.Fragment>
-        {filtredBriefs(this.props).length ? (
+        {selectStatus(this.props) ? (
+          <Londing />
+        ) : filtredBriefs(this.props).length ? (
           filtredBriefs(this.props).map((brief: Brief, idx: number) => (
             <ItemList key={idx}>
               <BriefCard
@@ -48,4 +56,12 @@ class BriefList extends React.Component<any, any> {
 
 // BriefList.propTypes = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(BriefList);
+export const connectedBriefList = connect(
+  briefStateToProps,
+  briefDispatchToProps
+)(BriefList);
+
+export default connect(
+  loadingStateToProps,
+  loadingDispatchToProps
+)(connectedBriefList);

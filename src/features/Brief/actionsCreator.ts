@@ -6,11 +6,11 @@ import {
 } from "../../share/constants/ActionTypes";
 import { createSelector } from "reselect";
 
-export function mapStateToProps(state: any) {
+export function briefStateToProps(state: any) {
   return { ...state.briefReducer };
 }
 
-export function mapDispatchToProps(dispatch: any) {
+export function briefDispatchToProps(dispatch: any) {
   return {
     setBrief: (payload: { type: "SET_BRIEF"; payload: Brief }) =>
       dispatch({ type: SET_BRIEF, payload }),

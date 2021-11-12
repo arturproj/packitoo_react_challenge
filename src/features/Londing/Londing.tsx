@@ -1,28 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  loadingStateToProps,
-  selectStatus,
-} from "./actionsCreator";
+import { loadingStateToProps, selectStatus } from "./actionsCreator";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export function Loader(props: any) {
-  console.log("Loading", props);
-
-  return selectStatus(props) ? (
+export function Loader() {
+  return (
     <div
       style={{
         backgroundColor: "#9e9e9e69",
-        position: "fixed",
-        height: "-webkit-fill-available",
-        width: " 51%",
+        position: "relative",
+        height: "98vh",
+        width: "100%",
+        display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        zIndex: 1005,
       }}
     >
       <CircularProgress />
     </div>
-  ) : null;
+  );
 }
-
-export default connect(loadingStateToProps, {})(Loader);
+export default Loader;

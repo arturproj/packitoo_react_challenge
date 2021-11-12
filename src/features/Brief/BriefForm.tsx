@@ -1,10 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { mapStateToProps, mapDispatchToProps } from "./actionsCreator";
-import { loadingDispatchToProps } from "../Londing/actionsCreator";
+import { briefStateToProps, briefDispatchToProps } from "./actionsCreator";
+import {
+  loadingStateToProps,
+  loadingDispatchToProps,
+  selectStatus,
+} from "../Londing/actionsCreator";
 import { getProducts, postBrief } from "../../share/api/brief";
 import SelectForm from "./components/SelectForm";
 import { Grid, TextField, Button } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
 
 class BriefForm extends React.Component<any, any> {
@@ -98,13 +103,19 @@ class BriefForm extends React.Component<any, any> {
             />
           </Grid>
           <Grid item>
-            <Button
-              variant="contained"
-              endIcon={<SendIcon />}
-              onClick={this.handleSubmit}
-            >
-              save brief
-            </Button>
+            {selectStatus(this.props) ? (
+              <LoadingButton loading variant="outlined">
+                Submit
+              </LoadingButton>
+            ) : (
+              <Button
+                variant="contained"
+                endIcon={<SendIcon />}
+                onClick={this.handleSubmit}
+              >
+                save brief
+              </Button>
+            )}
           </Grid>
         </Grid>
       </React.Fragment>
@@ -113,8 +124,11 @@ class BriefForm extends React.Component<any, any> {
 }
 
 export const connectedBriefForm = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  briefStateToProps,
+  briefDispatchToProps
 )(BriefForm);
 
-export default connect(null, loadingDispatchToProps)(connectedBriefForm);
+export default connect(
+  loadingStateToProps,
+  loadingDispatchToProps
+)(connectedBriefForm);

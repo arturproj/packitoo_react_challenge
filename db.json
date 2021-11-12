@@ -35,6 +35,12 @@
       "productId": 2,
       "comment": "Red Rocket",
       "id": 6
+    },
+    {
+      "title": "Jan Vermeer",
+      "productId": 1,
+      "comment": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      "id": 7
     }
   ],
   "products": [
